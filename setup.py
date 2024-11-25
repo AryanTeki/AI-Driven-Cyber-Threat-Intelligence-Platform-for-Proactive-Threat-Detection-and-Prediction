@@ -15,9 +15,9 @@ setup(
     author_email="your.email@example.com",
     description="Real-Time Threat Intelligence Integration System",
     keywords="cybersecurity, threat-intelligence, machine-learning",
-    url="https://github.com/yourusername/real-time-threat-intelligence",
+    url="https://github.com/AryanTeki/real-time-threat-intelligence-system",
     project_urls={
-        "Bug Tracker": "https://github.com/yourusername/real-time-threat-intelligence/issues",
+        "Bug Tracker": "https://github.com/AryanTeki/real-time-threat-intelligence-system/issues",
     },
     classifiers=[
         "Programming Language :: Python :: 3",
