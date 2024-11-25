@@ -1,0 +1,30 @@
+<!-- templates/dashboard.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <!-- Threat Overview -->
+    <div class="bg-white p-4 rounded-lg shadow">
+        <h2 class="text-xl font-bold mb-4">Threat Overview</h2>
+        <canvas id="threatChart"></canvas>
+    </div>
+    
+    <!-- Log Activity -->
+    <div class="bg-white p-4 rounded-lg shadow">
+        <h2 class="text-xl font-bold mb-4">Log Activity</h2>
+        <canvas id="logChart"></canvas>
+    </div>
+    
+    <!-- Recent Threats -->
+    <div class="bg-white p-4 rounded-lg shadow">
+        <h2 class="text-xl font-bold mb-4">Recent Threats</h2>
+        <div id="recentThreats" class="h-64 overflow-y-auto"></div>
+    </div>
+    
+    <!-- Recent Logs -->
+    <div class="bg-white p-4 rounded-lg shadow">
+        <h2 class="text-xl font-bold mb-4">Recent Logs</h2>
+        <div id="recentLogs" class="h-64 overflow-y-auto"></div>
+    </div>
+</div>
+{% endblock %}
