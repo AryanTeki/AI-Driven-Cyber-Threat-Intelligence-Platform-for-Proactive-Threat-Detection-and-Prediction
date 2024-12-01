@@ -3,6 +3,7 @@ p {
 }
 
 footer {
-    height: 26vh;
+    height: 10vh;
     margin: 0 1rem;
+    color: rgb(7, 32, 74);
 }
