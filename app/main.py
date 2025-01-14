@@ -1,7 +1,7 @@
 # app/main.py
 
 import os
-from dash import Dash, html
+from dash import Dash, html, dcc
 import dash_bootstrap_components as dbc
 from flask import Flask, session, redirect, url_for, request, flash
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
@@ -101,7 +101,7 @@ app = Dash(
     server=server,
     external_stylesheets=[dbc.themes.BOOTSTRAP],
     url_base_pathname='/',
-    use_pages=True  # Modern way to handle authentication in Dash
+    suppress_callback_exceptions=True
 )
 
 # Load configuration with error handling

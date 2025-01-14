@@ -4,13 +4,77 @@ import pandas as pd
 from sklearn.cluster import DBSCAN
 from sklearn.ensemble import IsolationForest, RandomForestClassifier
 from sklearn.svm import OneClassSVM
-try:
-    from transformers import pipeline
-    TRANSFORMERS_AVAILABLE = True
-except ImportError:
-    TRANSFORMERS_AVAILABLE = False
-    
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.naive_bayes import MultinomialNB
 from datetime import datetime, timedelta
+import re
+
+class TextClassifier:
+    """Simple text classifier using TF-IDF and Naive Bayes"""
+    def __init__(self):
+        self.vectorizer = TfidfVectorizer(max_features=1000)
+        self.classifier = MultinomialNB()
+        self.is_trained = False
+        self._init_training_data()
+    
+    def _init_training_data(self):
+        """Initialize with some basic training data"""
+        self.training_texts = [
+            "malware detected in system files",
+            "suspicious executable downloaded",
+            "ransomware encryption detected",
+            "phishing email received",
+            "credential theft attempt",
+            "ddos attack detected",
+            "high traffic volume",
+            "port scanning detected"
+        ]
+        self.training_labels = [
+            "malware",
+            "malware",
+            "ransomware",
+            "phishing",
+            "phishing",
+            "ddos",
+            "ddos",
+            "reconnaissance"
+        ]
+        
+        # Train initial model
+        self._train_model()
+    
+    def _train_model(self):
+        """Train the text classification model"""
+        if not self.training_texts:
+            return
+        
+        X = self.vectorizer.fit_transform(self.training_texts)
+        self.classifier.fit(X, self.training_labels)
+        self.is_trained = True
+    
+    def classify(self, text: str) -> Dict:
+        """Classify text and return prediction with confidence"""
+        if not self.is_trained:
+            return {'label': 'unknown', 'confidence': 0.0}
+        
+        # Transform text
+        X = self.vectorizer.transform([text])
+        
+        # Get prediction and probability
+        label = self.classifier.predict(X)[0]
+        probs = self.classifier.predict_proba(X)[0]
+        confidence = max(probs)
+        
+        return {
+            'label': label,
+            'confidence': float(confidence)
+        }
+    
+    def add_training_data(self, text: str, label: str):
+        """Add new training data and retrain model"""
+        self.training_texts.append(text)
+        self.training_labels.append(label)
+        self._train_model()
 
 class AdvancedThreatDetector:
     """Advanced threat detection using ensemble methods"""
@@ -139,17 +203,8 @@ class MLAnalyzer:
     
     def _init_models(self):
         """Initialize ML models"""
-        # Initialize NLP pipeline if available
-        self.nlp_classifier = None
-        if TRANSFORMERS_AVAILABLE:
-            try:
-                self.nlp_classifier = pipeline(
-                    "text-classification",
-                    model="distilbert-base-uncased",
-                    tokenizer="distilbert-base-uncased"
-                )
-            except Exception as e:
-                print(f"Failed to initialize NLP pipeline: {e}")
+        # Initialize text classifier
+        self.text_classifier = TextClassifier()
         
         # Initialize anomaly detection models
         self.isolation_forest = IsolationForest(contamination=0.1)
@@ -169,9 +224,9 @@ class MLAnalyzer:
         }
         
         # Basic threat detection
-        if 'text' in data and self.nlp_classifier:
+        if 'text' in data:
             try:
-                results['basic_analysis']['classification'] = self._classify_text(data['text'])
+                results['basic_analysis']['classification'] = self.text_classifier.classify(data['text'])
             except Exception as e:
                 print(f"Error in text classification: {e}")
                 results['basic_analysis']['classification'] = {'label': 'unknown', 'confidence': 0.0}
@@ -202,17 +257,6 @@ class MLAnalyzer:
         self._update_threat_memory(data, results)
         
         return results
-    
-    def _classify_text(self, text: str) -> Dict:
-        """Classify text using NLP if available"""
-        if not self.nlp_classifier:
-            return {'label': 'unknown', 'confidence': 0.0}
-        
-        result = self.nlp_classifier(text)[0]
-        return {
-            'label': result['label'],
-            'confidence': result['score']
-        }
     
     def _detect_anomalies(self, features: np.ndarray) -> Dict:
         """Detect anomalies using multiple methods"""
