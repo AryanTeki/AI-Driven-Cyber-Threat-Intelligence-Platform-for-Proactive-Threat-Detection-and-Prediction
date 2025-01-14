@@ -618,3 +618,20 @@
 2025-01-14 21:47:58,150 - __main__ - INFO - Successfully initialized DashboardManager
 2025-01-14 21:47:58,357 - __main__ - INFO - Successfully initialized background tasks
 2025-01-14 21:48:18,208 - modules.data_collection - INFO - Reddit integration available
+2025-01-14 21:48:21,008 - modules.data_collection - INFO - OTX client initialized
+2025-01-14 21:48:21,010 - modules.data_collection - INFO - VirusTotal client initialized
+2025-01-14 21:48:21,015 - __main__ - INFO - Successfully initialized DataCollector
+2025-01-14 21:48:21,031 - __main__ - INFO - Successfully initialized MLAnalyzer
+2025-01-14 21:48:21,052 - modules.visualization - INFO - DashboardManager initialized successfully
+2025-01-14 21:48:21,052 - __main__ - INFO - Successfully initialized DashboardManager
+2025-01-14 21:48:21,168 - __main__ - INFO - Successfully initialized background tasks
+2025-01-14 21:48:27,903 - modules.data_collection - INFO - Reddit integration available
+2025-01-14 21:48:30,855 - modules.data_collection - INFO - OTX client initialized
+2025-01-14 21:48:30,856 - modules.data_collection - INFO - VirusTotal client initialized
+2025-01-14 21:48:30,856 - __main__ - INFO - Successfully initialized DataCollector
+2025-01-14 21:48:30,860 - __main__ - INFO - Successfully initialized MLAnalyzer
+2025-01-14 21:48:30,872 - modules.visualization - INFO - DashboardManager initialized successfully
+2025-01-14 21:48:30,873 - __main__ - INFO - Successfully initialized DashboardManager
+2025-01-14 21:48:31,020 - __main__ - INFO - Successfully initialized background tasks
+2025-01-14 21:48:42,474 - modules.visualization - ERROR - Error creating dashboard page: The `dash_bootstrap_components.Spinner` component (version 1.5.0) received an unexpected keyword argument: `className`
+Allowed arguments: children, color, delay_hide, delay_show, fullscreen, fullscreenClassName, fullscreen_class_name, fullscreen_style, id, show_initially, size, spinnerClassName, spinner_class_name, spinner_style, type
