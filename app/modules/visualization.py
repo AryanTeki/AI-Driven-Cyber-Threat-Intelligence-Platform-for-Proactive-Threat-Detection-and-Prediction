@@ -315,24 +315,33 @@ class DashboardManager:
                         "Low": "success"
                     }
                     alert_items.append(
-                        dbc.ListGroupItem([
+                        dbc.ListGroupItem(
                             html.Div([
                                 html.Div([
-                                    html.Strong(f"{alert['type']}", className="mb-1"),
-                                    dbc.Badge(alert['severity'], 
-                                            color=severity_colors.get(alert['severity'], "primary"),
-                                            className="ml-2")
+                                    html.H6(alert['type'], className="mb-1 text-light"),
+                                    dbc.Badge(
+                                        alert['severity'],
+                                        color=severity_colors.get(alert['severity'], "primary"),
+                                        className="ml-2"
+                                    )
                                 ], className="d-flex justify-content-between align-items-center"),
-                                html.P(f"Location: {alert['location']}", className="mb-0 small"),
-                                html.Small(alert['time'], className="text-muted")
-                            ])
-                        ])
+                                html.P(
+                                    f"Location: {alert['location']}",
+                                    className="mb-1 small text-light"
+                                ),
+                                html.Small(
+                                    alert['time'],
+                                    className="text-muted"
+                                )
+                            ]),
+                            className="bg-dark border-light-subtle"
+                        )
                     )
                 
-                return dbc.ListGroup(alert_items)
+                return dbc.ListGroup(alert_items, className="alert-list bg-dark")
             except Exception as e:
                 logger.error(f"Error updating recent alerts: {e}")
-                return html.Div("Error loading alerts")
+                return html.Div("Error loading alerts", className="text-light")
 
         @self.app.callback(
             Output("threat-table-content", "children"),
@@ -1941,13 +1950,16 @@ class DashboardManager:
         """Create recent alerts panel"""
         return dbc.Card([
             dbc.CardHeader([
-                html.H3("Recent Alerts", className="mb-0"),
+                html.H3("Recent Alerts", className="mb-0 text-light"),
                 html.Small("Last 5 security alerts", className="text-muted")
-            ]),
+            ], className="bg-dark"),
             dbc.CardBody([
-                html.Div(id="recent-alerts-content")
-            ])
-        ])
+                html.Div(
+                    id="recent-alerts-content",
+                    className="bg-dark"
+                )
+            ], className="bg-dark p-0")
+        ], className="bg-dark border-0")
 
     def _create_threat_table(self):
         """Create threat table"""
