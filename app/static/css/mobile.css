@@ -1,0 +1,19 @@
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+    .container-fluid {
+        padding: 10px;
+    }
+    
+    .card {
+        margin-bottom: 1rem;
+    }
+    
+    .theme-switcher {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+    
+    .graph-container {
+        height: 300px;
+    }
+} 

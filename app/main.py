@@ -1,98 +1,212 @@
 # app/main.py
 
-from flask import Flask, render_template, jsonify
-from modules.threat_intelligence import ThreatIntelligence
-from modules.ml_classifier import ThreatClassifier
-from modules.log_monitor import LogMonitor
-import threading
-import queue
+import os
+from dash import Dash, html
+import dash_bootstrap_components as dbc
+from flask import Flask, session, redirect, url_for, request, flash
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+from werkzeug.security import generate_password_hash, check_password_hash
 import logging
-import time
-import random
 
-app = Flask(__name__)
+# Set up logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
-# Initialize components
-threat_intel = ThreatIntelligence()
-classifier = ThreatClassifier()
-log_monitor = LogMonitor()
+# Import modules with error handling
+try:
+    from modules.data_collection import DataCollector
+    logger.info("Successfully imported DataCollector")
+except ImportError as e:
+    logger.error(f"Error importing DataCollector: {e}")
+    DataCollector = None
 
-# Create queues for real-time updates
-log_queue = queue.Queue(maxsize=1000)
-threat_queue = queue.Queue(maxsize=1000)
+try:
+    from modules.ml_analysis import MLAnalyzer
+    logger.info("Successfully imported MLAnalyzer")
+except ImportError as e:
+    logger.error(f"Error importing MLAnalyzer: {e}")
+    MLAnalyzer = None
 
-# Store recent data in memory
-recent_logs = []
-recent_threats = []
-MAX_STORED_ITEMS = 1000
+try:
+    from modules.visualization import DashboardManager
+    logger.info("Successfully imported DashboardManager")
+except ImportError as e:
+    logger.error(f"Error importing DashboardManager: {e}")
+    DashboardManager = None
 
-def process_log(log_entry):
-    """Process incoming log entries."""
-    global recent_logs
-    recent_logs.append(log_entry)
-    if len(recent_logs) > MAX_STORED_ITEMS:
-        recent_logs.pop(0)
-    log_queue.put(log_entry)
+# Initialize Flask
+server = Flask(__name__)
+server.secret_key = os.environ.get('SECRET_KEY', 'your-secret-key-here')
 
-def process_threat(threat_data):
-    """Process incoming threat data."""
-    global recent_threats
-    # Add ML classification
-    severity_prediction = classifier.predict_severity(
-        threat_data['severity_score'],
-        threat_data['confidence_score']
-    )
-    threat_data['ml_severity'] = severity_prediction
+# Initialize login manager
+login_manager = LoginManager()
+login_manager.init_app(server)
+login_manager.login_view = 'login'
+
+# User model for authentication
+class User(UserMixin):
+    def __init__(self, user_id, username, role):
+        self.id = user_id
+        self.username = username
+        self.role = role
+
+# Mock user database - replace with real database in production
+users_db = {
+    'admin': {
+        'password': generate_password_hash('admin'),
+        'role': 'admin'
+    }
+}
+
+@login_manager.user_loader
+def load_user(user_id):
+    if user_id in users_db:
+        return User(user_id, user_id, users_db[user_id]['role'])
+    return None
+
+# Authentication routes
+@server.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        
+        if username in users_db and check_password_hash(users_db[username]['password'], password):
+            user = User(username, username, users_db[username]['role'])
+            login_user(user)
+            return redirect('/')
+        else:
+            flash('Invalid username or password')
     
-    recent_threats.append(threat_data)
-    if len(recent_threats) > MAX_STORED_ITEMS:
-        recent_threats.pop(0)
-    threat_queue.put(threat_data)
+    return '''
+        <form method="post">
+            <p><input type=text name=username placeholder="Username">
+            <p><input type=password name=password placeholder="Password">
+            <p><input type=submit value=Login>
+        </form>
+    '''
 
-# Start background threads
-def run_threat_collection():
-    """Background thread for collecting threat data."""
-    while True:
-        threat_data = threat_intel.get_threat_data()
-        process_threat(threat_data)
-        time.sleep(random.uniform(1, 3))
+@server.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect('/login')
 
-def run_log_monitoring():
-    """Background thread for monitoring logs."""
-    while True:
-        log_entry = log_monitor.generate_log_entry()
-        process_log(log_entry)
-        time.sleep(random.uniform(0.5, 2.0))
+# Initialize Dash with updated parameters
+app = Dash(
+    __name__,
+    server=server,
+    external_stylesheets=[dbc.themes.BOOTSTRAP],
+    url_base_pathname='/',
+    use_pages=True  # Modern way to handle authentication in Dash
+)
 
-@app.route('/')
-def index():
-    """Render the main dashboard."""
-    return render_template('dashboard.html')
+# Load configuration with error handling
+config = {
+    'otx_api_key': os.environ.get('OTX_API_KEY', 'demo-key'),
+    'vt_api_key': os.environ.get('VT_API_KEY', 'demo-key'),
+    'twitter_api_key': os.environ.get('TWITTER_API_KEY'),
+    'twitter_api_secret': os.environ.get('TWITTER_API_SECRET'),
+    'reddit_client_id': os.environ.get('REDDIT_CLIENT_ID'),
+    'reddit_client_secret': os.environ.get('REDDIT_CLIENT_SECRET'),
+    'reddit_user_agent': 'CTI Platform v1.0'
+}
 
-@app.route('/api/latest-threats')
-def get_latest_threats():
-    """API endpoint for getting latest threats."""
-    return jsonify(recent_threats[-50:])
+# Initialize modules with error handling
+data_collector = None
+ml_analyzer = None
+dashboard_manager = None
 
-@app.route('/api/latest-logs')
-def get_latest_logs():
-    """API endpoint for getting latest logs."""
-    return jsonify(recent_logs[-50:])
+if DataCollector:
+    try:
+        data_collector = DataCollector(config)
+        logger.info("Successfully initialized DataCollector")
+    except Exception as e:
+        logger.error(f"Error initializing DataCollector: {e}")
+
+if MLAnalyzer:
+    try:
+        ml_analyzer = MLAnalyzer(config)
+        logger.info("Successfully initialized MLAnalyzer")
+    except Exception as e:
+        logger.error(f"Error initializing MLAnalyzer: {e}")
+
+if DashboardManager:
+    try:
+        dashboard_manager = DashboardManager(app)
+        logger.info("Successfully initialized DashboardManager")
+    except Exception as e:
+        logger.error(f"Error initializing DashboardManager: {e}")
+
+# Set up the dashboard layout
+if dashboard_manager:
+    app.layout = dashboard_manager.create_main_layout()
+else:
+    # Fallback layout
+    app.layout = dbc.Container([
+        html.H1("Cyber Threat Intelligence Platform"),
+        html.Hr(),
+        dbc.Alert(
+            "Some components are not available. Check the logs for details.",
+            color="warning"
+        )
+    ])
+
+# Add authentication to Dash routes using modern pattern
+def protect_dashviews(app):
+    for view_function in app.server.view_functions:
+        if view_function.startswith(app.config.url_base_pathname):
+            app.server.view_functions[view_function] = login_required(
+                app.server.view_functions[view_function]
+            )
+
+protect_dashviews(app)
 
 def start_background_tasks():
-    """Start background processing threads."""
-    threat_thread = threading.Thread(target=run_threat_collection, daemon=True)
-    log_thread = threading.Thread(target=run_log_monitoring, daemon=True)
+    """Start background tasks for data collection and analysis"""
+    if not (data_collector and ml_analyzer):
+        logger.warning("Background tasks disabled: required modules not available")
+        return
     
-    threat_thread.start()
-    log_thread.start()
+    try:
+        from celery import Celery
+        
+        celery = Celery('cti_platform',
+                        broker='redis://localhost:6379/0',
+                        backend='redis://localhost:6379/0')
+        
+        @celery.task
+        def collect_and_analyze_data():
+            try:
+                # Collect threat data
+                threat_data = data_collector.collect_threat_feeds()
+                social_data = data_collector.monitor_social_media()
+                
+                # Analyze threats
+                for threat in threat_data + social_data:
+                    ml_analyzer.analyze_threat(threat)
+                    # Store results in database
+            except Exception as e:
+                logger.error(f"Error in background task: {e}")
+        
+        # Schedule tasks
+        celery.conf.beat_schedule = {
+            'collect-and-analyze': {
+                'task': 'collect_and_analyze_data',
+                'schedule': 300.0  # every 5 minutes
+            }
+        }
+        
+        logger.info("Successfully initialized background tasks")
+    except Exception as e:
+        logger.error(f"Error setting up background tasks: {e}")
 
 if __name__ == '__main__':
-    # Initialize logging
-    logging.basicConfig(level=logging.INFO)
-    
     # Start background tasks
     start_background_tasks()
     
-    # Run the Flask app
-    app.run(debug=True, use_reloader=False)
+    # Run the application
+    app.run_server(debug=True, host='localhost', port=8050)

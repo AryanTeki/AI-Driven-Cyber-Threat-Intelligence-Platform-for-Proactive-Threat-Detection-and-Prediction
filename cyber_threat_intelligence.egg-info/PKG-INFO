@@ -1,0 +1,19 @@
+Metadata-Version: 2.2
+Name: cyber_threat_intelligence
+Version: 1.0.0
+Summary: Cyber Threat Intelligence Platform
+Requires-Python: >=3.13
+Requires-Dist: dash>=2.14.2
+Requires-Dist: dash-bootstrap-components>=1.6.0
+Requires-Dist: flask>=3.0.2
+Requires-Dist: flask-login>=0.6.3
+Requires-Dist: plotly>=5.18.0
+Requires-Dist: numpy>=1.26.0
+Requires-Dist: pandas>=2.2.0
+Requires-Dist: PyJWT>=2.8.0
+Requires-Dist: flask-bcrypt>=1.0.1
+Requires-Dist: python-jose>=3.3.0
+Requires-Dist: faker>=22.6.0
+Requires-Dist: reportlab>=4.1.0
+Requires-Dist: scikit-learn>=1.4.0
+Requires-Dist: statsmodels>=0.14.1
