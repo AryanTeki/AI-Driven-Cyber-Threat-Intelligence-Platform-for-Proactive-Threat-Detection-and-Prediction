@@ -304,6 +304,8 @@ class DashboardManager:
         def update_recent_alerts(n):
             try:
                 df = self.data_generator.generate_threat_data()
+                # Convert 'time' column to datetime
+                df['time'] = pd.to_datetime(df['time'])
                 recent_alerts = df.nlargest(5, 'time')
                 
                 alert_items = []
@@ -335,7 +337,7 @@ class DashboardManager:
                                 html.Small(
                                     [
                                         html.I(className="fas fa-clock mr-2"),
-                                        alert['time']
+                                        alert['time'].strftime('%Y-%m-%d %H:%M:%S')  # Format datetime
                                     ],
                                     className="text-muted"
                                 ),
@@ -1988,7 +1990,13 @@ class DashboardManager:
                     id="recent-alerts-content",
                     className="bg-dark"
                 ),
-                dbc.Spinner(color="primary", type="grow", size="sm", className="mt-3")
+                dbc.Spinner(
+                    color="primary", 
+                    type="grow", 
+                    size="sm", 
+                    spinner_class_name="spinner-border text-primary", 
+                    fullscreen_class_name="mt-3"
+                )
             ], className="bg-dark p-2")
         ], className="bg-dark border-0 h-100")
 

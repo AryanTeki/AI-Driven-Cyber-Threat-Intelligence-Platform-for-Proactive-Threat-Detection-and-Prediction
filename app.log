@@ -582,3 +582,86 @@
 2025-01-14 20:13:56,419 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
 2025-01-14 20:14:01,317 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
 2025-01-14 20:15:10,874 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 21:52:24,670 - modules.data_collection - WARNING - Reddit integration not available: No module named 'praw'
+2025-01-14 21:52:26,310 - modules.data_collection - INFO - OTX client initialized
+2025-01-14 21:52:26,310 - modules.data_collection - INFO - VirusTotal client initialized
+2025-01-14 21:52:26,311 - __main__ - INFO - Successfully initialized DataCollector
+2025-01-14 21:52:26,314 - __main__ - INFO - Successfully initialized MLAnalyzer
+2025-01-14 21:52:26,322 - modules.visualization - INFO - DashboardManager initialized successfully
+2025-01-14 21:52:26,323 - __main__ - INFO - Successfully initialized DashboardManager
+2025-01-14 21:52:26,485 - __main__ - INFO - Successfully initialized background tasks
+2025-01-14 21:52:26,487 - dash.dash - INFO - Dash is running on http://localhost:8050/
+
+2025-01-14 21:52:27,597 - modules.data_collection - WARNING - Reddit integration not available: No module named 'praw'
+2025-01-14 21:52:29,178 - modules.data_collection - INFO - OTX client initialized
+2025-01-14 21:52:29,179 - modules.data_collection - INFO - VirusTotal client initialized
+2025-01-14 21:52:29,179 - __main__ - INFO - Successfully initialized DataCollector
+2025-01-14 21:52:29,182 - __main__ - INFO - Successfully initialized MLAnalyzer
+2025-01-14 21:52:29,195 - modules.visualization - INFO - DashboardManager initialized successfully
+2025-01-14 21:52:29,195 - __main__ - INFO - Successfully initialized DashboardManager
+2025-01-14 21:52:29,358 - __main__ - INFO - Successfully initialized background tasks
+2025-01-14 21:52:32,827 - modules.visualization - ERROR - Error creating dashboard page: The `dash_bootstrap_components.Spinner` component (version 1.6.0) received an unexpected keyword argument: `className`
+Allowed arguments: children, color, delay_hide, delay_show, fullscreen, fullscreenClassName, fullscreen_class_name, fullscreen_style, id, show_initially, size, spinnerClassName, spinner_class_name, spinner_style, type
+2025-01-14 21:52:38,088 - modules.visualization - ERROR - Error creating dashboard page: The `dash_bootstrap_components.Spinner` component (version 1.6.0) received an unexpected keyword argument: `className`
+Allowed arguments: children, color, delay_hide, delay_show, fullscreen, fullscreenClassName, fullscreen_class_name, fullscreen_style, id, show_initially, size, spinnerClassName, spinner_class_name, spinner_style, type
+2025-01-14 21:53:51,041 - modules.data_collection - WARNING - Reddit integration not available: No module named 'praw'
+2025-01-14 21:53:52,779 - modules.data_collection - INFO - OTX client initialized
+2025-01-14 21:53:52,779 - modules.data_collection - INFO - VirusTotal client initialized
+2025-01-14 21:53:52,780 - __main__ - INFO - Successfully initialized DataCollector
+2025-01-14 21:53:52,783 - __main__ - INFO - Successfully initialized MLAnalyzer
+2025-01-14 21:53:52,792 - modules.visualization - INFO - DashboardManager initialized successfully
+2025-01-14 21:53:52,792 - __main__ - INFO - Successfully initialized DashboardManager
+2025-01-14 21:53:52,978 - __main__ - INFO - Successfully initialized background tasks
+2025-01-14 21:53:52,980 - dash.dash - INFO - Dash is running on http://localhost:8050/
+
+2025-01-14 21:53:54,215 - modules.data_collection - WARNING - Reddit integration not available: No module named 'praw'
+2025-01-14 21:53:55,942 - modules.data_collection - INFO - OTX client initialized
+2025-01-14 21:53:55,942 - modules.data_collection - INFO - VirusTotal client initialized
+2025-01-14 21:53:55,943 - __main__ - INFO - Successfully initialized DataCollector
+2025-01-14 21:53:55,946 - __main__ - INFO - Successfully initialized MLAnalyzer
+2025-01-14 21:53:55,956 - modules.visualization - INFO - DashboardManager initialized successfully
+2025-01-14 21:53:55,956 - __main__ - INFO - Successfully initialized DashboardManager
+2025-01-14 21:53:56,127 - __main__ - INFO - Successfully initialized background tasks
+2025-01-14 21:53:56,960 - modules.visualization - ERROR - Error creating dashboard page: The `dash_bootstrap_components.Spinner` component (version 1.6.0) received an unexpected keyword argument: `className`
+Allowed arguments: children, color, delay_hide, delay_show, fullscreen, fullscreenClassName, fullscreen_class_name, fullscreen_style, id, show_initially, size, spinnerClassName, spinner_class_name, spinner_style, type
+2025-01-14 21:54:49,951 - modules.data_collection - WARNING - Reddit integration not available: No module named 'praw'
+2025-01-14 21:54:51,718 - modules.data_collection - INFO - OTX client initialized
+2025-01-14 21:54:51,719 - modules.data_collection - INFO - VirusTotal client initialized
+2025-01-14 21:54:51,719 - __main__ - INFO - Successfully initialized DataCollector
+2025-01-14 21:54:51,722 - __main__ - INFO - Successfully initialized MLAnalyzer
+2025-01-14 21:54:51,732 - modules.visualization - INFO - DashboardManager initialized successfully
+2025-01-14 21:54:51,732 - __main__ - INFO - Successfully initialized DashboardManager
+2025-01-14 21:54:51,900 - __main__ - INFO - Successfully initialized background tasks
+2025-01-14 21:54:51,902 - dash.dash - INFO - Dash is running on http://localhost:8050/
+
+2025-01-14 21:54:53,027 - modules.data_collection - WARNING - Reddit integration not available: No module named 'praw'
+2025-01-14 21:54:54,569 - modules.data_collection - INFO - OTX client initialized
+2025-01-14 21:54:54,570 - modules.data_collection - INFO - VirusTotal client initialized
+2025-01-14 21:54:54,570 - __main__ - INFO - Successfully initialized DataCollector
+2025-01-14 21:54:54,573 - __main__ - INFO - Successfully initialized MLAnalyzer
+2025-01-14 21:54:54,583 - modules.visualization - INFO - DashboardManager initialized successfully
+2025-01-14 21:54:54,584 - __main__ - INFO - Successfully initialized DashboardManager
+2025-01-14 21:54:54,744 - __main__ - INFO - Successfully initialized background tasks
+2025-01-14 21:54:56,078 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 21:55:01,785 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 21:55:06,086 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 21:55:11,893 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 21:55:17,805 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 21:55:22,807 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 21:55:27,747 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 21:55:32,754 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 21:55:37,800 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 21:55:42,744 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 21:55:47,728 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 21:55:52,749 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 21:55:57,743 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 21:56:02,743 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 21:56:07,708 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 21:56:25,100 - modules.data_collection - WARNING - Reddit integration not available: No module named 'praw'
+2025-01-14 21:56:26,665 - modules.data_collection - INFO - OTX client initialized
+2025-01-14 21:56:26,666 - modules.data_collection - INFO - VirusTotal client initialized
+2025-01-14 21:56:26,666 - __main__ - INFO - Successfully initialized DataCollector
+2025-01-14 21:56:26,669 - __main__ - INFO - Successfully initialized MLAnalyzer
+2025-01-14 21:56:26,677 - modules.visualization - INFO - DashboardManager initialized successfully
+2025-01-14 21:56:26,678 - __main__ - INFO - Successfully initialized DashboardManager
+2025-01-14 21:56:26,865 - __main__ - INFO - Successfully initialized background tasks
