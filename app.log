@@ -319,3 +319,71 @@
 2025-01-14 18:55:59,603 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
 2025-01-14 18:56:01,190 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
 2025-01-14 18:56:06,708 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 18:58:54,046 - modules.data_collection - INFO - Reddit integration available
+2025-01-14 18:58:56,225 - modules.data_collection - INFO - OTX client initialized
+2025-01-14 18:58:56,226 - modules.data_collection - INFO - VirusTotal client initialized
+2025-01-14 18:58:56,226 - __main__ - INFO - Successfully initialized DataCollector
+2025-01-14 18:58:56,229 - __main__ - INFO - Successfully initialized MLAnalyzer
+2025-01-14 18:58:56,238 - modules.visualization - INFO - DashboardManager initialized successfully
+2025-01-14 18:58:56,238 - __main__ - INFO - Successfully initialized DashboardManager
+2025-01-14 18:58:56,369 - __main__ - INFO - Successfully initialized background tasks
+2025-01-14 18:58:56,372 - dash.dash - INFO - Dash is running on http://localhost:8050/
+
+2025-01-14 18:58:58,142 - modules.data_collection - INFO - Reddit integration available
+2025-01-14 18:59:00,645 - modules.data_collection - INFO - OTX client initialized
+2025-01-14 18:59:00,646 - modules.data_collection - INFO - VirusTotal client initialized
+2025-01-14 18:59:00,647 - __main__ - INFO - Successfully initialized DataCollector
+2025-01-14 18:59:00,655 - __main__ - INFO - Successfully initialized MLAnalyzer
+2025-01-14 18:59:00,680 - modules.visualization - INFO - DashboardManager initialized successfully
+2025-01-14 18:59:00,682 - __main__ - INFO - Successfully initialized DashboardManager
+2025-01-14 18:59:00,840 - __main__ - INFO - Successfully initialized background tasks
+2025-01-14 18:59:41,986 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 18:59:47,079 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 18:59:51,931 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 18:59:56,884 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:00:02,066 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:00:06,962 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:00:12,115 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:00:13,016 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:00:17,019 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:01:51,984 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:01:57,099 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:02:02,020 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:02:06,950 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:02:11,943 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:02:16,976 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:02:22,096 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:02:27,023 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:02:31,805 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:02:36,887 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:02:41,917 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:02:47,088 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:02:51,937 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:02:56,955 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:03:02,076 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:03:06,909 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:03:12,120 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:03:16,989 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:03:21,792 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:03:26,870 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:03:31,991 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:03:36,916 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:03:41,996 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:03:46,967 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:03:51,915 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:03:56,823 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:04:01,870 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:04:06,820 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:04:11,962 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:04:16,932 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:04:21,987 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:04:26,966 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:04:32,035 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:04:36,779 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:04:41,931 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:04:46,926 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:04:51,861 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:04:56,989 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:05:02,004 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:05:39,191 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 19:05:44,380 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
