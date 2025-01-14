@@ -326,22 +326,49 @@ class DashboardManager:
                                     )
                                 ], className="d-flex justify-content-between align-items-center"),
                                 html.P(
-                                    f"Location: {alert['location']}",
+                                    [
+                                        html.I(className="fas fa-map-marker-alt mr-2"),
+                                        f"Location: {alert['location']}"
+                                    ],
                                     className="mb-1 small text-light"
                                 ),
                                 html.Small(
-                                    alert['time'],
+                                    [
+                                        html.I(className="fas fa-clock mr-2"),
+                                        alert['time']
+                                    ],
                                     className="text-muted"
-                                )
+                                ),
+                                html.Div([
+                                    html.Small(
+                                        [
+                                            html.I(className="fas fa-shield-alt mr-2"),
+                                            f"Status: {alert['status']}"
+                                        ],
+                                        className="text-light"
+                                    ),
+                                    dbc.Button(
+                                        "View Details",
+                                        color="primary",
+                                        size="sm",
+                                        className="ml-2"
+                                    )
+                                ], className="d-flex justify-content-between align-items-center mt-2")
                             ]),
-                            className="bg-dark border-light-subtle"
+                            className="bg-dark border-light-subtle mb-2"
                         )
                     )
+                
+                if not alert_items:
+                    return html.Div("No recent alerts", className="text-light text-center p-3")
                 
                 return dbc.ListGroup(alert_items, className="alert-list bg-dark")
             except Exception as e:
                 logger.error(f"Error updating recent alerts: {e}")
-                return html.Div("Error loading alerts", className="text-light")
+                return html.Div([
+                    html.I(className="fas fa-exclamation-circle text-danger mr-2"),
+                    "Error loading alerts"
+                ], className="text-light text-center p-3")
 
         @self.app.callback(
             Output("threat-table-content", "children"),
@@ -1950,16 +1977,20 @@ class DashboardManager:
         """Create recent alerts panel"""
         return dbc.Card([
             dbc.CardHeader([
-                html.H3("Recent Alerts", className="mb-0 text-light"),
+                html.Div([
+                    html.H3("Recent Alerts", className="mb-0 text-light"),
+                    dbc.Badge("Live", color="danger", className="ml-2 pulse")
+                ], className="d-flex align-items-center"),
                 html.Small("Last 5 security alerts", className="text-muted")
             ], className="bg-dark"),
             dbc.CardBody([
                 html.Div(
                     id="recent-alerts-content",
                     className="bg-dark"
-                )
-            ], className="bg-dark p-0")
-        ], className="bg-dark border-0")
+                ),
+                dbc.Spinner(color="primary", type="grow", size="sm", className="mt-3")
+            ], className="bg-dark p-2")
+        ], className="bg-dark border-0 h-100")
 
     def _create_threat_table(self):
         """Create threat table"""
