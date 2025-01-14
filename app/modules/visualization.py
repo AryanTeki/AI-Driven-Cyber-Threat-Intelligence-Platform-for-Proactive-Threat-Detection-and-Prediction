@@ -9,6 +9,7 @@ import logging
 from datetime import datetime, timedelta
 import numpy as np
 import random
+import io
 
 logger = logging.getLogger(__name__)
 
@@ -420,15 +421,185 @@ class DashboardManager:
                 logger.error(f"Error updating analytics charts: {e}")
                 return tuple(go.Figure() for _ in range(5))
 
-        # Report generation callback
+        # Report generation and download callback
         @self.app.callback(
-            Output("generate-report-btn", "disabled"),
-            [Input("report-type", "value"),
-             Input("time-range", "value"),
-             Input("report-sections", "value")]
+            [Output("download-report", "data"),
+             Output("recent-reports-list", "children")],
+            [Input("generate-report-btn", "n_clicks")],
+            [State("report-type", "value"),
+             State("time-range", "value"),
+             State("report-sections", "value"),
+             State("export-format", "value")]
         )
-        def update_report_button(report_type, time_range, sections):
-            return not all([report_type, time_range, sections])
+        def generate_and_download_report(n_clicks, report_type, time_range, sections, export_format):
+            if not n_clicks:
+                return None, self._get_recent_reports()
+
+            try:
+                df = self.data_generator.generate_threat_data()
+                current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
+                
+                if export_format == "csv":
+                    # Generate CSV
+                    csv_string = df.to_csv(index=False)
+                    filename = f"threat_report_{current_time}.csv"
+                    return dict(content=csv_string, filename=filename, type="text/csv"), self._get_recent_reports()
+                
+                elif export_format == "excel":
+                    # Generate Excel
+                    excel_buffer = io.BytesIO()
+                    with pd.ExcelWriter(excel_buffer, engine='xlsxwriter') as writer:
+                        df.to_excel(writer, sheet_name='Threat Data', index=False)
+                        
+                        # Add additional sheets based on sections
+                        if "summary" in sections:
+                            summary_data = self._generate_summary_data(df)
+                            summary_data.to_excel(writer, sheet_name='Executive Summary', index=False)
+                        
+                        if "threats" in sections:
+                            threat_analysis = self._generate_threat_analysis(df)
+                            threat_analysis.to_excel(writer, sheet_name='Threat Analysis', index=False)
+                    
+                    excel_buffer.seek(0)
+                    filename = f"threat_report_{current_time}.xlsx"
+                    return dict(content=excel_buffer.getvalue(), filename=filename, type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"), self._get_recent_reports()
+                
+                else:  # PDF
+                    # Generate PDF report
+                    pdf_buffer = io.BytesIO()
+                    self._generate_pdf_report(df, report_type, time_range, sections, pdf_buffer)
+                    pdf_buffer.seek(0)
+                    filename = f"threat_report_{current_time}.pdf"
+                    return dict(content=pdf_buffer.getvalue(), filename=filename, type="application/pdf"), self._get_recent_reports()
+
+            except Exception as e:
+                logger.error(f"Error generating report: {e}")
+                return None, html.Div("Error generating report", className="text-light")
+
+    def _get_recent_reports(self):
+        """Get list of recent reports"""
+        recent_reports = [
+            self._create_report_item(
+                "Executive Summary Report",
+                "Daily overview of security incidents and threats",
+                "5 minutes ago",
+                "System"
+            ),
+            self._create_report_item(
+                "Threat Analysis Report",
+                "Detailed analysis of detected threats and patterns",
+                "1 hour ago",
+                "John Doe"
+            ),
+            self._create_report_item(
+                "Incident Response Report",
+                "Summary of incident response activities",
+                "2 hours ago",
+                "Jane Smith"
+            )
+        ]
+        return dbc.ListGroup(recent_reports, className="bg-dark")
+
+    def _generate_summary_data(self, df):
+        """Generate summary data for reports"""
+        summary_data = {
+            'Metric': [
+                'Total Threats',
+                'Critical Threats',
+                'High Threats',
+                'Medium Threats',
+                'Low Threats',
+                'Active Threats',
+                'Mitigated Threats'
+            ],
+            'Value': [
+                len(df),
+                len(df[df['severity'] == 'Critical']),
+                len(df[df['severity'] == 'High']),
+                len(df[df['severity'] == 'Medium']),
+                len(df[df['severity'] == 'Low']),
+                len(df[df['status'] == 'Active']),
+                len(df[df['status'] == 'Mitigated'])
+            ]
+        }
+        return pd.DataFrame(summary_data)
+
+    def _generate_threat_analysis(self, df):
+        """Generate threat analysis data for reports"""
+        threat_analysis = df.groupby(['type', 'severity', 'status']).size().reset_index(name='count')
+        return threat_analysis
+
+    def _generate_pdf_report(self, df, report_type, time_range, sections, buffer):
+        """Generate PDF report"""
+        try:
+            from reportlab.lib import colors
+            from reportlab.lib.pagesizes import letter
+            from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
+            from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+            
+            doc = SimpleDocTemplate(buffer, pagesize=letter)
+            styles = getSampleStyleSheet()
+            story = []
+
+            # Title
+            title_style = ParagraphStyle(
+                'CustomTitle',
+                parent=styles['Heading1'],
+                fontSize=24,
+                spaceAfter=30
+            )
+            story.append(Paragraph(f"Security Report - {report_type.title()}", title_style))
+            story.append(Spacer(1, 12))
+
+            # Add sections based on selection
+            if "summary" in sections:
+                story.append(Paragraph("Executive Summary", styles["Heading2"]))
+                summary_data = self._generate_summary_data(df)
+                summary_table = Table(summary_data.values.tolist())
+                summary_table.setStyle(TableStyle([
+                    ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+                    ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                    ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                    ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                    ('FONTSIZE', (0, 0), (-1, 0), 14),
+                    ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                    ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+                    ('TEXTCOLOR', (0, 1), (-1, -1), colors.black),
+                    ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
+                    ('FONTSIZE', (0, 1), (-1, -1), 12),
+                    ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                    ('GRID', (0, 0), (-1, -1), 1, colors.black)
+                ]))
+                story.append(summary_table)
+                story.append(Spacer(1, 20))
+
+            if "threats" in sections:
+                story.append(Paragraph("Threat Analysis", styles["Heading2"]))
+                threat_data = self._generate_threat_analysis(df)
+                threat_table = Table(threat_data.values.tolist())
+                threat_table.setStyle(TableStyle([
+                    ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+                    ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                    ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                    ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                    ('FONTSIZE', (0, 0), (-1, 0), 14),
+                    ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                    ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+                    ('TEXTCOLOR', (0, 1), (-1, -1), colors.black),
+                    ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
+                    ('FONTSIZE', (0, 1), (-1, -1), 12),
+                    ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                    ('GRID', (0, 0), (-1, -1), 1, colors.black)
+                ]))
+                story.append(threat_table)
+                story.append(Spacer(1, 20))
+
+            # Build PDF
+            doc.build(story)
+
+        except Exception as e:
+            logger.error(f"Error generating PDF report: {e}")
+            raise
 
     def _create_header(self, title):
         """Create page header with title"""
@@ -668,19 +839,19 @@ class DashboardManager:
             return html.Div("Error loading analytics")
 
     def _create_reports_page(self):
-        """Create the reports page"""
+        """Create the reports page with download functionality"""
         try:
             return dbc.Container([
                 self._create_header("Security Reports"),
                 dbc.Row([
                     dbc.Col([
                         dbc.Card([
-                            dbc.CardHeader("Generate Report"),
+                            dbc.CardHeader("Generate Report", className="bg-dark text-light"),
                             dbc.CardBody([
                                 dbc.Form([
                                     dbc.Row([
                                         dbc.Col([
-                                            dbc.Label("Report Type"),
+                                            dbc.Label("Report Type", className="text-light"),
                                             dbc.Select(
                                                 id="report-type",
                                                 options=[
@@ -690,11 +861,12 @@ class DashboardManager:
                                                     {"label": "Compliance Report", "value": "compliance"},
                                                     {"label": "Performance Metrics", "value": "performance"}
                                                 ],
-                                                value="executive"
+                                                value="executive",
+                                                className="mb-3"
                                             )
                                         ], md=6),
                                         dbc.Col([
-                                            dbc.Label("Time Range"),
+                                            dbc.Label("Time Range", className="text-light"),
                                             dbc.Select(
                                                 id="time-range",
                                                 options=[
@@ -703,13 +875,14 @@ class DashboardManager:
                                                     {"label": "Last 30 Days", "value": "30d"},
                                                     {"label": "Custom Range", "value": "custom"}
                                                 ],
-                                                value="24h"
+                                                value="24h",
+                                                className="mb-3"
                                             )
                                         ], md=6)
-                                    ], className="mb-3"),
+                                    ]),
                                     dbc.Row([
                                         dbc.Col([
-                                            dbc.Label("Include Sections"),
+                                            dbc.Label("Include Sections", className="text-light"),
                                             dbc.Checklist(
                                                 id="report-sections",
                                                 options=[
@@ -719,25 +892,53 @@ class DashboardManager:
                                                     {"label": "Mitigation Actions", "value": "actions"},
                                                     {"label": "Recommendations", "value": "recommendations"}
                                                 ],
-                                                value=["summary", "threats", "incidents"]
+                                                value=["summary", "threats", "incidents"],
+                                                className="text-light mb-3"
                                             )
                                         ])
-                                    ], className="mb-3"),
+                                    ]),
+                                    dbc.Row([
+                                        dbc.Col([
+                                            dbc.Label("Export Format", className="text-light"),
+                                            dbc.RadioItems(
+                                                id="export-format",
+                                                options=[
+                                                    {"label": "PDF Report", "value": "pdf"},
+                                                    {"label": "CSV Data", "value": "csv"},
+                                                    {"label": "Excel Workbook", "value": "excel"}
+                                                ],
+                                                value="pdf",
+                                                inline=True,
+                                                className="text-light mb-3"
+                                            )
+                                        ])
+                                    ]),
                                     dbc.Button(
-                                        "Generate Report",
+                                        [html.I(className="fas fa-file-export mr-2"), "Generate & Download"],
                                         id="generate-report-btn",
                                         color="primary",
-                                        disabled=False
-                                    )
+                                        className="mt-2"
+                                    ),
+                                    dcc.Download(id="download-report")
                                 ])
-                            ])
-                        ], className="mb-4")
+                            ], className="bg-dark")
+                        ], className="mb-4 border-0")
+                    ], md=12)
+                ]),
+                dbc.Row([
+                    dbc.Col([
+                        dbc.Card([
+                            dbc.CardHeader("Recent Reports", className="bg-dark text-light"),
+                            dbc.CardBody([
+                                html.Div(id="recent-reports-list", className="bg-dark")
+                            ], className="bg-dark")
+                        ], className="border-0")
                     ], md=12)
                 ])
             ], fluid=True)
         except Exception as e:
             logger.error(f"Error creating reports page: {e}")
-            return html.Div("Error loading reports")
+            return html.Div("Error loading reports page", className="text-light")
 
     def _create_report_item(self, title, description, time, author):
         """Create a report list item"""
@@ -1734,7 +1935,7 @@ class DashboardManager:
                     config={'displayModeBar': False}
                 )
             ])
-        ], className="mb-4")
+        ])
 
     def _create_recent_alerts(self):
         """Create recent alerts panel"""
