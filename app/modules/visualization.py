@@ -304,7 +304,10 @@ class DashboardManager:
         def update_recent_alerts(n):
             try:
                 df = self.data_generator.generate_threat_data()
-                recent_alerts = df.nlargest(5, 'time')
+                # Convert time column to datetime
+                df['time'] = pd.to_datetime(df['time'])
+                # Sort by time and take most recent 5
+                recent_alerts = df.sort_values('time', ascending=False).head(5)
                 
                 alert_items = []
                 for _, alert in recent_alerts.iterrows():
@@ -1988,7 +1991,11 @@ class DashboardManager:
                     id="recent-alerts-content",
                     className="bg-dark"
                 ),
-                dbc.Spinner(color="primary", type="grow", size="sm", className="mt-3")
+                dbc.Spinner(
+                    color="primary",
+                    type="grow",
+                    size="sm"
+                )
             ], className="bg-dark p-2")
         ], className="bg-dark border-0 h-100")
 
