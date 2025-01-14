@@ -582,3 +582,39 @@
 2025-01-14 20:13:56,419 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
 2025-01-14 20:14:01,317 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
 2025-01-14 20:15:10,874 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 21:46:07,995 - modules.data_collection - INFO - Reddit integration available
+2025-01-14 21:46:12,860 - modules.data_collection - INFO - OTX client initialized
+2025-01-14 21:46:12,861 - modules.data_collection - INFO - VirusTotal client initialized
+2025-01-14 21:46:12,861 - __main__ - INFO - Successfully initialized DataCollector
+2025-01-14 21:46:12,882 - __main__ - INFO - Successfully initialized MLAnalyzer
+2025-01-14 21:46:12,913 - modules.visualization - INFO - DashboardManager initialized successfully
+2025-01-14 21:46:12,914 - __main__ - INFO - Successfully initialized DashboardManager
+2025-01-14 21:46:13,407 - __main__ - INFO - Successfully initialized background tasks
+2025-01-14 21:46:13,409 - dash.dash - INFO - Dash is running on http://localhost:8050/
+
+2025-01-14 21:46:15,802 - modules.data_collection - INFO - Reddit integration available
+2025-01-14 21:46:18,269 - modules.data_collection - INFO - OTX client initialized
+2025-01-14 21:46:18,269 - modules.data_collection - INFO - VirusTotal client initialized
+2025-01-14 21:46:18,270 - __main__ - INFO - Successfully initialized DataCollector
+2025-01-14 21:46:18,275 - __main__ - INFO - Successfully initialized MLAnalyzer
+2025-01-14 21:46:18,288 - modules.visualization - INFO - DashboardManager initialized successfully
+2025-01-14 21:46:18,289 - __main__ - INFO - Successfully initialized DashboardManager
+2025-01-14 21:46:18,434 - __main__ - INFO - Successfully initialized background tasks
+2025-01-14 21:46:38,798 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 21:46:43,726 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 21:46:49,006 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 21:46:55,818 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 21:46:59,872 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 21:47:04,758 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 21:47:08,778 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 21:47:14,895 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 21:47:18,736 - modules.visualization - ERROR - Error updating recent alerts: Column 'time' has dtype object, cannot use method 'nlargest' with this dtype
+2025-01-14 21:47:55,254 - modules.data_collection - INFO - Reddit integration available
+2025-01-14 21:47:58,109 - modules.data_collection - INFO - OTX client initialized
+2025-01-14 21:47:58,110 - modules.data_collection - INFO - VirusTotal client initialized
+2025-01-14 21:47:58,111 - __main__ - INFO - Successfully initialized DataCollector
+2025-01-14 21:47:58,122 - __main__ - INFO - Successfully initialized MLAnalyzer
+2025-01-14 21:47:58,149 - modules.visualization - INFO - DashboardManager initialized successfully
+2025-01-14 21:47:58,150 - __main__ - INFO - Successfully initialized DashboardManager
+2025-01-14 21:47:58,357 - __main__ - INFO - Successfully initialized background tasks
+2025-01-14 21:48:18,208 - modules.data_collection - INFO - Reddit integration available
