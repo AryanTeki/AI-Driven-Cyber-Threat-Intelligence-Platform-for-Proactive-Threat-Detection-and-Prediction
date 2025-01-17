@@ -43,7 +43,7 @@ This platform provides Security Operation Center (SOC) analysts with real-time t
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/yourusername/real-time-threat-intelligence-system.git
+   git clone https://github.com/AryanTeki/AI-Driven-Cyber-Threat-Intelligence-Platform-for-Proactive-Threat-Detection-and-Prediction.git
    cd real-time-threat-intelligence-system
    ```
 
@@ -98,26 +98,6 @@ This platform provides Security Operation Center (SOC) analysts with real-time t
      - Username: admin
      - Password: admin
 
-## Project Structure
-
-```
-real-time-threat-intelligence-system/
-├── app/
-│   ├── modules/
-│   │   ├── visualization.py
-│   │   ├── threat_intelligence.py
-│   │   ├── ml_classifier.py
-│   │   └── log_monitor.py
-│   ├── static/
-│   │   ├── css/
-│   │   └── js/
-│   ├── templates/
-│   ├── main.py
-│   └── config.py
-├── tests/
-├── requirements.txt
-└── README.md
-```
 
 ## Configuration
 
@@ -126,72 +106,3 @@ The application can be configured through the following files:
 - `.env`: Environment variables
 - `requirements.txt`: Python dependencies
 
-## Development
-
-To contribute to the project:
-
-1. Fork the repository
-2. Create a feature branch
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
-3. Make your changes
-4. Run tests
-   ```bash
-   pytest
-   ```
-5. Submit a pull request
-
-## Testing
-
-Run the test suite:
-```bash
-pytest
-```
-
-For coverage report:
-```bash
-pytest --cov=app tests/
-```
-
-## Troubleshooting
-
-Common issues and solutions:
-
-1. **Redis Connection Error**
-   - Ensure Redis server is running
-   - Check Redis connection settings in config
-
-2. **Module Import Errors**
-   - Verify virtual environment is activated
-   - Reinstall requirements
-
-3. **Dashboard Not Loading**
-   - Check browser console for errors
-   - Verify all dependencies are installed
-   - Check port 8050 is available
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Acknowledgments
-
-- Dash by Plotly for the interactive visualization framework
-- Flask for the web framework
-- Bootstrap for the UI components
-
-## Support
-
-For support and questions:
-- Create an issue in the GitHub repository
-- Contact the development team
-- Check the documentation
-
-## Security
-
-Report security vulnerabilities to security@yourdomain.com
-
-## Contributing
-
-Please read CONTRIBUTING.md for details on our code of conduct and the process for submitting pull requests. 
