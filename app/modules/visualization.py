@@ -10,6 +10,7 @@ from datetime import datetime, timedelta
 import numpy as np
 import random
 import io
+import base64
 
 logger = logging.getLogger(__name__)
 
@@ -32,7 +33,109 @@ class SOCDataGenerator:
             'Dubai': {'lat': 25.2048, 'lon': 55.2708},
             'Paris': {'lat': 48.8566, 'lon': 2.3522},
             'Berlin': {'lat': 52.5200, 'lon': 13.4050},
-            'Mumbai': {'lat': 19.0760, 'lon': 72.8777}
+            'Mumbai': {'lat': 19.0760, 'lon': 72.8777},
+            'Toronto': {'lat': 43.6532, 'lon': -79.3832},
+            'São Paulo': {'lat': -23.5505, 'lon': -46.6333},
+            'Mexico City': {'lat': 19.4326, 'lon': -99.1332},
+            'Cairo': {'lat': 30.0444, 'lon': 31.2357},
+            'Lagos': {'lat': 6.5244, 'lon': 3.3792},
+            'Istanbul': {'lat': 41.0082, 'lon': 28.9784},
+            'Seoul': {'lat': 37.5665, 'lon': 126.9780},
+            'Beijing': {'lat': 39.9042, 'lon': 116.4074},
+            'Shanghai': {'lat': 31.2304, 'lon': 121.4737},
+            'Hong Kong': {'lat': 22.3193, 'lon': 114.1694},
+            'Bangkok': {'lat': 13.7563, 'lon': 100.5018},
+            'Jakarta': {'lat': -6.2088, 'lon': 106.8456},
+            'Manila': {'lat': 14.5995, 'lon': 120.9842},
+            'Melbourne': {'lat': -37.8136, 'lon': 144.9631},
+            'Auckland': {'lat': -36.8509, 'lon': 174.7645},
+            'Amsterdam': {'lat': 52.3676, 'lon': 4.9041},
+            'Brussels': {'lat': 50.8503, 'lon': 4.3517},
+            'Vienna': {'lat': 48.2082, 'lon': 16.3738},
+            'Stockholm': {'lat': 59.3293, 'lon': 18.0686},
+            'Oslo': {'lat': 59.9139, 'lon': 10.7522},
+            'Copenhagen': {'lat': 55.6761, 'lon': 12.5683},
+            'Warsaw': {'lat': 52.2297, 'lon': 21.0122},
+            'Prague': {'lat': 50.0755, 'lon': 14.4378},
+            'Budapest': {'lat': 47.4979, 'lon': 19.0402},
+            'Rome': {'lat': 41.9028, 'lon': 12.4964},
+            'Madrid': {'lat': 40.4168, 'lon': -3.7038},
+            'Lisbon': {'lat': 38.7223, 'lon': -9.1393},
+            'Athens': {'lat': 37.9838, 'lon': 23.7275},
+            'Bucharest': {'lat': 44.4268, 'lon': 26.1025},
+            'Kiev': {'lat': 50.4501, 'lon': 30.5234},
+            'Tel Aviv': {'lat': 32.0853, 'lon': 34.7818},
+            'Riyadh': {'lat': 24.7136, 'lon': 46.6753},
+            'Abu Dhabi': {'lat': 24.4539, 'lon': 54.3773},
+            'Doha': {'lat': 25.2854, 'lon': 51.5310},
+            'Kuwait City': {'lat': 29.3759, 'lon': 47.9774},
+            'Tehran': {'lat': 35.6892, 'lon': 51.3890},
+            'Karachi': {'lat': 24.8607, 'lon': 67.0011},
+            'New Delhi': {'lat': 28.6139, 'lon': 77.2090},
+            'Bangalore': {'lat': 12.9716, 'lon': 77.5946},
+            'Chennai': {'lat': 13.0827, 'lon': 80.2707},
+            'Colombo': {'lat': 6.9271, 'lon': 79.8612},
+            'Dhaka': {'lat': 23.8103, 'lon': 90.4125},
+            'Bangkok': {'lat': 13.7563, 'lon': 100.5018},
+            'Ho Chi Minh City': {'lat': 10.8231, 'lon': 106.6297},
+            'Kuala Lumpur': {'lat': 3.1390, 'lon': 101.6869},
+            'Manila': {'lat': 14.5995, 'lon': 120.9842},
+            'Taipei': {'lat': 25.0330, 'lon': 121.5654},
+            'Guangzhou': {'lat': 23.1291, 'lon': 113.2644},
+            'Shenzhen': {'lat': 22.5431, 'lon': 114.0579},
+            'Chengdu': {'lat': 30.5728, 'lon': 104.0668},
+            'Vancouver': {'lat': 49.2827, 'lon': -123.1207},
+            'Montreal': {'lat': 45.5017, 'lon': -73.5673},
+            'Chicago': {'lat': 41.8781, 'lon': -87.6298},
+            'Los Angeles': {'lat': 34.0522, 'lon': -118.2437},
+            'San Francisco': {'lat': 37.7749, 'lon': -122.4194},
+            'Seattle': {'lat': 47.6062, 'lon': -122.3321},
+            'Boston': {'lat': 42.3601, 'lon': -71.0589},
+            'Washington DC': {'lat': 38.9072, 'lon': -77.0369},
+            'Miami': {'lat': 25.7617, 'lon': -80.1918},
+            'Houston': {'lat': 29.7604, 'lon': -95.3698},
+            'Dallas': {'lat': 32.7767, 'lon': -96.7970},
+            'Mexico City': {'lat': 19.4326, 'lon': -99.1332},
+            'Monterrey': {'lat': 25.6866, 'lon': -100.3161},
+            'Guadalajara': {'lat': 20.6597, 'lon': -103.3496},
+            'Panama City': {'lat': 8.9824, 'lon': -79.5199},
+            'Bogota': {'lat': 4.7110, 'lon': -74.0721},
+            'Lima': {'lat': -12.0464, 'lon': -77.0428},
+            'Santiago': {'lat': -33.4489, 'lon': -70.6693},
+            'Buenos Aires': {'lat': -34.6037, 'lon': -58.3816},
+            'Rio de Janeiro': {'lat': -22.9068, 'lon': -43.1729},
+            'Brasilia': {'lat': -15.7975, 'lon': -47.8919},
+            'Johannesburg': {'lat': -26.2041, 'lon': 28.0473},
+            'Cape Town': {'lat': -33.9249, 'lon': 18.4241},
+            'Nairobi': {'lat': -1.2921, 'lon': 36.8219},
+            'Addis Ababa': {'lat': 9.0320, 'lon': 38.7422},
+            'Casablanca': {'lat': 33.5731, 'lon': -7.5898},
+            'Tunis': {'lat': 36.8065, 'lon': 10.1815},
+            'Algiers': {'lat': 36.7538, 'lon': 3.0588},
+            'Accra': {'lat': 5.6037, 'lon': -0.1870},
+            'Dakar': {'lat': 14.7167, 'lon': -17.4677},
+            'Luanda': {'lat': -8.8399, 'lon': 13.2894},
+            'Kinshasa': {'lat': -4.4419, 'lon': 15.2663},
+            'Dar es Salaam': {'lat': -6.7924, 'lon': 39.2083},
+            'Khartoum': {'lat': 15.5007, 'lon': 32.5599},
+            'Alexandria': {'lat': 31.2001, 'lon': 29.9187},
+            'Beirut': {'lat': 33.8938, 'lon': 35.5018},
+            'Amman': {'lat': 31.9454, 'lon': 35.9284},
+            'Baghdad': {'lat': 33.3152, 'lon': 44.3661},
+            'Muscat': {'lat': 23.5880, 'lon': 58.3829},
+            'Baku': {'lat': 40.4093, 'lon': 49.8671},
+            'Tashkent': {'lat': 41.2995, 'lon': 69.2401},
+            'Almaty': {'lat': 43.2220, 'lon': 76.8512},
+            'Islamabad': {'lat': 33.6007, 'lon': 73.0679},
+            'Kabul': {'lat': 34.5553, 'lon': 69.2075},
+            'Hanoi': {'lat': 21.0285, 'lon': 105.8542},
+            'Phnom Penh': {'lat': 11.5564, 'lon': 104.9282},
+            'Vientiane': {'lat': 17.9757, 'lon': 102.6331},
+            'Yangon': {'lat': 16.8661, 'lon': 96.1951},
+            'Perth': {'lat': -31.9505, 'lon': 115.8605},
+            'Brisbane': {'lat': -27.4698, 'lon': 153.0251},
+            'Adelaide': {'lat': -34.9285, 'lon': 138.6007},
+            'Wellington': {'lat': -41.2866, 'lon': 174.7756}
         }
         self.status_options = ['Active', 'Investigating', 'Mitigated', 'Resolved', 'Escalated']
         self.severity_levels = ['Critical', 'High', 'Medium', 'Low']
@@ -234,7 +337,7 @@ class DashboardManager:
             try:
                 df = self.data_generator.generate_threat_data()
                 df['time'] = pd.to_datetime(df['time'])
-                hourly_counts = df.groupby([pd.Grouper(key='time', freq='H'), 'severity']).size().reset_index(name='count')
+                hourly_counts = df.groupby([pd.Grouper(key='time', freq='h'), 'severity']).size().reset_index(name='count')
                 
                 fig = go.Figure()
                 
@@ -481,16 +584,18 @@ class DashboardManager:
                 if export_format == "csv":
                     # Generate CSV
                     csv_string = df.to_csv(index=False)
-                    filename = f"threat_report_{current_time}.csv"
-                    return dict(content=csv_string, filename=filename, type="text/csv"), self._get_recent_reports()
+                    return dict(
+                        content=csv_string,
+                        filename=f"threat_report_{current_time}.csv",
+                        type="text/csv"
+                    ), self._get_recent_reports()
                 
                 elif export_format == "excel":
                     # Generate Excel
                     excel_buffer = io.BytesIO()
-                    with pd.ExcelWriter(excel_buffer, engine='xlsxwriter') as writer:
+                    with pd.ExcelWriter(excel_buffer, engine='openpyxl') as writer:  # Changed engine to 'openpyxl'
                         df.to_excel(writer, sheet_name='Threat Data', index=False)
                         
-                        # Add additional sheets based on sections
                         if "summary" in sections:
                             summary_data = self._generate_summary_data(df)
                             summary_data.to_excel(writer, sheet_name='Executive Summary', index=False)
@@ -500,20 +605,39 @@ class DashboardManager:
                             threat_analysis.to_excel(writer, sheet_name='Threat Analysis', index=False)
                     
                     excel_buffer.seek(0)
-                    filename = f"threat_report_{current_time}.xlsx"
-                    return dict(content=excel_buffer.getvalue(), filename=filename, type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"), self._get_recent_reports()
+                    return dict(
+                        content=base64.b64encode(excel_buffer.getvalue()).decode('utf-8'),
+                        filename=f"threat_report_{current_time}.xlsx",
+                        type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        base64=True
+                    ), self._get_recent_reports()
                 
                 else:  # PDF
                     # Generate PDF report
                     pdf_buffer = io.BytesIO()
                     self._generate_pdf_report(df, report_type, time_range, sections, pdf_buffer)
                     pdf_buffer.seek(0)
-                    filename = f"threat_report_{current_time}.pdf"
-                    return dict(content=pdf_buffer.getvalue(), filename=filename, type="application/pdf"), self._get_recent_reports()
+                    return dict(
+                        content=base64.b64encode(pdf_buffer.getvalue()).decode('utf-8'),
+                        filename=f"threat_report_{current_time}.pdf",
+                        type="application/pdf",
+                        base64=True
+                    ), self._get_recent_reports()
 
             except Exception as e:
                 logger.error(f"Error generating report: {e}")
                 return None, html.Div("Error generating report", className="text-light")
+
+        # Add new callback for alert collapse
+        @self.app.callback(
+            Output("alert-collapse", "is_open"),
+            [Input("alert-collapse-button", "n_clicks")],
+            [State("alert-collapse", "is_open")],
+        )
+        def toggle_alert_collapse(n_clicks, is_open):
+            if n_clicks:
+                return not is_open
+            return is_open
 
     def _get_recent_reports(self):
         """Get list of recent reports"""
@@ -763,6 +887,48 @@ class DashboardManager:
                     /* Ensure text contrast */
                     h1, h2, h3, h4, h5, h6, p, span, div {
                         color: var(--text-color);
+                    }
+                    
+                    /* Active Threats Styles */
+                    .active-threats-container {
+                        max-height: 400px;
+                        overflow-y: auto;
+                    }
+                    
+                    .border-left-thick {
+                        border-left: 4px solid;
+                        transition: all 0.3s ease;
+                    }
+                    
+                    .border-left-thick:hover {
+                        transform: translateX(5px);
+                        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                    }
+                    
+                    .list-group-item.border-left-thick {
+                        border-left-color: var(--danger);
+                    }
+                    
+                    .alert-collapse-button:hover {
+                        background-color: rgba(255,255,255,0.1) !important;
+                    }
+                    
+                    .active-threats-container::-webkit-scrollbar {
+                        width: 8px;
+                    }
+                    
+                    .active-threats-container::-webkit-scrollbar-track {
+                        background: rgba(0,0,0,0.1);
+                        border-radius: 4px;
+                    }
+                    
+                    .active-threats-container::-webkit-scrollbar-thumb {
+                        background: rgba(255,255,255,0.2);
+                        border-radius: 4px;
+                    }
+                    
+                    .active-threats-container::-webkit-scrollbar-thumb:hover {
+                        background: rgba(255,255,255,0.3);
                     }
                 </style>
             </head>
@@ -1865,18 +2031,127 @@ class DashboardManager:
         ])
 
     def _create_alert_section(self):
-        """Create alert section with real-time alerts"""
+        """Create alert section with real-time alerts and expandable details"""
         return dbc.Row([
             dbc.Col(
-                dbc.Alert([
-                    html.I(className="fas fa-exclamation-triangle mr-2"),
-                    "Active Threats Detected",
-                    html.Span("3 High Risk", className="ml-2 badge bg-danger")
-                ],
-                color="warning",
-                className="alert-pulse mb-4"),
+                dbc.Card([
+                    dbc.CardHeader(
+                        dbc.Button(
+                            [
+                                html.I(className="fas fa-exclamation-triangle mr-2"),
+                                "Active Threats Detected ",
+                                html.Span("3 High Risk", className="ml-2 badge bg-danger"),
+                                html.I(className="fas fa-chevron-down ml-2")
+                            ],
+                            id="alert-collapse-button",
+                            color="warning",
+                            className="w-100 text-left d-flex align-items-center justify-content-between",
+                        )
+                    ),
+                    dbc.Collapse(
+                        dbc.CardBody([
+                            html.Div([
+                                dbc.ListGroup([
+                                    self._create_active_threat_item(
+                                        "THR-0023",
+                                        "Ransomware Attack",
+                                        "Critical",
+                                        "Active",
+                                        "New York",
+                                        "5 minutes ago",
+                                        "Multiple encryption attempts detected"
+                                    ),
+                                    self._create_active_threat_item(
+                                        "THR-0024",
+                                        "Data Exfiltration",
+                                        "High",
+                                        "Investigating",
+                                        "London",
+                                        "8 minutes ago",
+                                        "Unusual data transfer patterns observed"
+                                    ),
+                                    self._create_active_threat_item(
+                                        "THR-0025",
+                                        "Advanced Persistent Threat",
+                                        "Critical",
+                                        "Active",
+                                        "Tokyo",
+                                        "12 minutes ago",
+                                        "Sophisticated attack patterns detected"
+                                    )
+                                ], flush=True)
+                            ], className="active-threats-container")
+                        ]),
+                        id="alert-collapse",
+                        is_open=False,
+                    )
+                ], className="mb-4 border-danger"),
             )
         ])
+
+    def _create_active_threat_item(self, threat_id, threat_type, severity, status, location, time, description):
+        """Create an individual threat item for the expandable alert section"""
+        severity_colors = {
+            "Critical": "danger",
+            "High": "warning",
+            "Medium": "info",
+            "Low": "success"
+        }
+        status_colors = {
+            "Active": "danger",
+            "Investigating": "warning",
+            "Contained": "info",
+            "Resolved": "success"
+        }
+        
+        return dbc.ListGroupItem([
+            dbc.Row([
+                dbc.Col([
+                    html.Div([
+                        html.H5([
+                            html.I(className="fas fa-bug mr-2"),
+                            threat_id,
+                            dbc.Badge(
+                                severity,
+                                color=severity_colors.get(severity, "primary"),
+                                className="ml-2"
+                            )
+                        ], className="mb-1"),
+                        html.H6(threat_type, className="mb-2"),
+                        html.P(description, className="mb-2 text-muted"),
+                        html.Div([
+                            dbc.Badge(
+                                [html.I(className="fas fa-map-marker-alt mr-1"), location],
+                                color="light",
+                                className="mr-2"
+                            ),
+                            dbc.Badge(
+                                [html.I(className="fas fa-clock mr-1"), time],
+                                color="light",
+                                className="mr-2"
+                            ),
+                            dbc.Badge(
+                                status,
+                                color=status_colors.get(status, "primary"),
+                                className="mr-2"
+                            )
+                        ])
+                    ])
+                ], md=9),
+                dbc.Col([
+                    dbc.ButtonGroup([
+                        dbc.Button([
+                            html.I(className="fas fa-shield-alt mr-1"),
+                            "Respond"
+                        ], color="primary", size="sm", className="mr-2"),
+                        dbc.Button([
+                            html.I(className="fas fa-eye mr-1"),
+                            "Details"
+                        ], color="secondary", size="sm")
+                    ], className="float-right")
+                ], md=3, className="d-flex align-items-center justify-content-end")
+            ])
+        ], className="border-left-thick")
 
     def _create_summary_cards(self):
         """Create summary cards with key metrics"""
